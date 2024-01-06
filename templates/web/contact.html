@@ -1,0 +1,67 @@
+{% extends 'web/partials/base.html' %}
+{% load static %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+
+  <main>
+  <!-- section -->
+  <section class="my-lg-14 my-8">
+      <!-- container -->
+    <div class="container">
+      <div class="row">
+          <!-- col -->
+        <div class="offset-lg-2 col-lg-8 col-12">
+          <div class="mb-8">
+              <!-- heading -->
+            <h1 class="h3">Contact</h1>
+            <p class="lead mb-0">This form is for retailer inquiries only. For all other customer or shopper
+              support requests, please visit the links below this form.</p>
+          </div>
+         
+          <!-- form -->
+          <form action="{% url "web:contact" %}" method="POST" id="contactForm"  name="ContactForm" class="row">
+            {% csrf_token %}  
+            <!-- input -->
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="fname"> First Name<span class="text-danger">*</span></label>
+              {{form.first_name}}
+            </div>
+            <div class="col-md-6 mb-3">
+              <!-- input -->
+              <label class="form-label" for="lname"> Last Name<span class="text-danger">*</span></label>
+              {{form.last_name}}
+            </div>
+            <div class="col-md-12 mb-3">
+              <!-- input -->
+              <label class="form-label" for="company"> Company<span class="text-danger">*</span></label>
+              {{form.company}}
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="emailContact">Email<span class="text-danger">*</span></label>
+              {{form.email}}
+            </div>
+            <div class="col-md-6 mb-3">
+              <!-- input -->
+              <label class="form-label" for="phone"> Phone</label>
+              {{form.phone}}
+            </div>
+            <div class="col-md-12 mb-3">
+              <!-- input -->
+              <label class="form-label" for="comments"> Comments</label>
+              {{form.comments}}
+            </div>
+
+            <div class="col-md-12">
+              <!-- btn -->
+              <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+
+            </div>
+          </form>      
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% endblock %}

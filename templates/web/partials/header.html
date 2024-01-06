@@ -1,0 +1,254 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+</head>
+<body>
+  
+
+  
+  <!-- navigation -->
+  <header>
+    <div class="container">
+      
+      <div class="row align-items-center pt-6 pb-4 mt-4 mt-lg-0">
+        <div class="col-xl-2 col-md-3 mb-4 mb-md-0 col-12 text-center text-md-start">
+          <a href="{% url "products:index" %}">
+            {% comment %} <h2 class="d-inline-block align-text-top">Odadoz</h2>  {% endcomment %}
+          </a>
+  
+        </div>
+  
+        <div class="col-xxl-6 col-xl-5 col-lg-6 col-md-9">
+          <form action="{% url "products:shop" %}" method="GET">
+            {% csrf_token %}
+            <div class="input-group">
+              <input class="form-control" type="search" placeholder="Search for products" name="text_search"
+                aria-label="Recipient's username" aria-describedby="button-addon2">
+              <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
+            </div>
+          </form>
+          
+        </div>
+
+        <div class="col-xxl-4 col-xl-5 col-lg-3 d-none d-lg-block">
+          <div class="d-flex align-items-center justify-content-between ms-4">
+            
+                <div class="ms-6 text-center">         
+                </div>
+
+
+            <div class="ms-6 text-center">
+              <a href="{% url "auth_login" %}" data-bs-toggle="dropdown" class="text-reset">
+                <div class="lh-1">
+              
+
+                {% if request.user.is_authenticated %}
+                    <div class="ms-0">
+                        {% if request.user.userprofile.profile_pic %}
+                            <img src="{{ request.user.userprofile.profile_pic.url }}" class="avatar avatar-md rounded-circle">
+                        {% else %}
+                            <i class="bi bi-person-circle fs-4"></i>
+                        {% endif %}
+                        <p class="mb-0 d-none d-xl-block small" style="margin-top: 5px;">{{ request.user.username }}</p>
+                    </div>
+                {% else %}
+                <a href="{% url 'auth_login' %}" class="text-reset text-decoration-none">
+                  <div class="mb-2">
+                      <i class="bi bi-person-circle fs-4"></i>
+                  </div>
+                  <p class="mb-0 d-none d-xl-block small">Sign up</p>
+              </a>
+              
+                {% endif %}
+
+
+                {% if request.user.is_authenticated %}
+              
+              <div class="dropdown-menu dropdown-menu-end p-0">
+
+                <div class="lh-1 px-5 py-4 border-bottom">
+                    <h5 class="mb-1 h6">{{ request.user.username }}</h5>
+                    <small>{{ request.user.email }}</small>
+                </div>
+                
+                    <li>
+                        <a class="dropdown-item" href="{% url "products:index" %}">
+                          Home
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a class="dropdown-item" href="{% url "orders:account-settings" %}">
+                          Settings
+                        </a>
+                    </li> 
+                  
+
+                    <li>
+                      <a class="dropdown-item" href="{% url 'auth_password_change' %}">
+                        Change Password 
+                      </a>
+                  </li> 
+
+                                                   
+                <div class="border-top ">
+                  {% if request.user.is_authenticated %}
+                  <li class="nav-item">
+                    <div class="border-top px-5 py-3">
+                      <a href="{% url "auth_logout" %}">Log Out</a>
+                    </div>
+                  </li>
+                  {% else %}
+                  <li class="nav-item">
+                    <div class="border-top px-5 py-3">
+                      <a href="{% url "auth_login" %}">Sign In</a>
+                    </div>
+                  </li>
+                  {% endif %}             
+                </div>              
+              </div>
+              {% endif %} 
+            </div>
+
+          </a>
+        </div>
+        
+        {% if request.user.is_authenticated %}
+        <div class="ms-6 text-center">
+          <a href="{% url "orders:account-orders" %}" class="text-reset">
+            <div class="lh-1">
+              <div class="mb-2">
+                <i class="bi bi-archive fs-4"></i>
+
+              </div>
+              <p class="mb-0 d-none d-xl-block small">My Orders</p>
+            </div>
+          </a>
+        </div>
+        {% endif %}   
+
+        <!-- Your existing header.html code -->
+
+        <div class="text-center ms-6">
+          <a href="{% url 'orders:wishlist' %}" class="text-muted position-relative" id="wishlist-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-heart">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success" id="header_wishlist_count">
+                  {{ wishlist_count }}
+                  <span class="visually-hidden">sdfes</span>
+              </span>
+          </a>
+          <p class="mb-0 d-none d-xl-block small">Wishlist</p>
+        </div>
+      
+
+        <!-- Your existing header.html code continues -->
+ 
+
+            <div class="text-center ms-6">
+              <a href="{% url 'orders:cart_detail' %}" class="text-reset">
+                <div class="text-center">
+                  <div class="">
+                    <i class="bi bi-cart2 fs-4"></i>
+                    <span class="position-absolute  translate-middle badge rounded-pill bg-danger mt-2">
+                    {{request.session.cart|length}}
+                      
+                      <span class="visually-hidden">unread messages</span>
+                    </span>
+                  </div>
+                  <p class="mb-0 d-none d-xl-block small">Shopping Cart</p>
+                </div>
+              </a>
+            </div>
+            
+          </div>
+
+        </div>
+  
+      </div>
+    </div>
+  </header>
+  
+  
+  <nav class="navbar navbar-expand-lg navbar-light navbar-default p-0 p-sm-0 navbar-offcanvas-color "
+    aria-label="Offcanvas navbar large">
+    <div class="container">
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="navbar-default" aria-labelledby="navbar-defaultLabel">
+        <div class="offcanvas-header pb-1">
+          <a href="{% url "products:index" %}">
+            <img src="" alt="eCommerce HTML Template"></a>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div class="">
+            <ul class="navbar-nav align-items-center ">
+              <li class="dropdown me-6 d-none d-lg-block">
+
+                <a href="{% url "products:index" %}" class="text-inherit" data-bs-toggle="dropdown" aria-expanded="false">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-text-left me-2" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                      d="M2 12.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z">
+                    </path>
+                  </svg>
+                  All Categories
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-lg">
+                  <li class="dropdown-menu-list">
+                    {% for category in categories %}
+                    <a href="{% url 'products:shop' %}?category={{ category.id }}" class="dropdown-item d-flex justify-content-between mb-1 py-1 ">
+                          <div> 
+                            <span class="ms-1">{{ category.title }}</span>
+                          </div>
+                      <div>                      
+                      </div>
+                    </a>
+                    {% endfor %}                   
+                  </li>
+                </ul>
+  
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="{% url "products:index" %}" role="button" 
+                  aria-expanded="false">
+                  Home
+                </a>               
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link " href="{% url "web:about" %}" role="button" 
+                  aria-expanded="false">
+                  About
+                </a>                
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="{% url "products:shop" %}" role="button" 
+                  aria-expanded="false">
+                  Shop
+                </a>                
+              </li>
+             
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="{% url "web:contact" %}" role="button" 
+                  aria-expanded="false">
+                  Contact
+                </a>                
+              </li>                      
+            </ul>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+</body>
+</html>

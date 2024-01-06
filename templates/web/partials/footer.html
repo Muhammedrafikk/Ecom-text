@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+</head>
+<body>
+
+   <!-- footer -->
+<footer class="footer bg-dark pb-6 pt-4 pt-md-12">
+  <div class="container">
+    <div class="row align-items-center ">
+        <div class="col-8 col-md-12 col-lg-4">
+            <!-- <a href="{% url "products:index" %}">
+            <h2 class="d-inline-block align-text-top text-warning">Odadoz</h2> 
+            </a> -->
+        </div>
+    </div>
+    <br>
+    <div class="row g-4 ">
+      <div class="col-12 col-md-12 col-lg-4">
+        <h6 class="mb-4 text-white">Categories</h6>
+        <div class="row">
+          <div class="col-6">
+            <!-- list -->
+            {% for category in categories %}              
+
+            <ul class="nav flex-column">
+
+              <li class="nav-item mb-2"><a href="{% url 'products:shop' %}?category={{ category.id }}" class="nav-link">{{ category.title }}</a></li>
+             
+            </ul>
+            {% endfor %}
+          </div>
+
+          <div class="col-6">
+              <!-- list -->
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2"><a href="{% url 'products:shop' %}?category={{ category.id }}" class="nav-link">{{ category.title }}</a></li>
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-12 col-lg-8">
+        <div class="row g-4">
+          <div class="col-6 col-sm-6 col-md-3">
+            <h6 class="mb-4 text-white">Get to know us</h6>
+              <!-- list -->
+              <ul class="nav flex-column">
+                <li class="nav-item mb-2"><a href="{% url "products:index" %}" class="nav-link">Home</a></li>
+                <li class="nav-item mb-2"><a href="{% url "web:about" %}" class="nav-link">About</a></li>
+                <li class="nav-item mb-2"><a href="{% url "products:shop" %}" class="nav-link">Shop</a></li>
+                <li class="nav-item mb-2"><a href="{% url "web:contact" %}" class="nav-link">Contact</a></li>       
+              </ul>
+          </div>
+          <div class="col-6 col-sm-6 col-md-3">
+            <h6 class="mb-4 text-white">For Consumers</h6>
+            <ul class="nav flex-column">
+                  <!-- list -->
+              <li class="nav-item mb-2"><a href="{% url "products:shop" %}" class="nav-link">Product Returns</a></li>
+              <li class="nav-item mb-2"><a href="{% url "orders:cart_detail" %}" class="nav-link">Shop Cart</a></li>
+              <li class="nav-item mb-2"><a href="{% url "orders:checkout" %}" class="nav-link">Shop Checkout</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-sm-6 col-md-3">
+            <h6 class="mb-4 text-white">Become a Shopper</h6>
+            <ul class="nav flex-column">
+                <!-- list -->
+              <li class="nav-item mb-2"><a href="{% url "orders:wishlist" %}" class="nav-link">Shopper wishlist</a></li>
+              <li class="nav-item mb-2"><a href="{% url "products:shop" %}" class="nav-link">Become a Shopper</a></li>
+              <li class="nav-item mb-2"><a href="{% url "web:about" %}" class="nav-link">About sweet candy</a></li>
+        
+            </ul>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <hr class="mt-8 opacity-25">
+    <div class="text-center">
+      <div class="row align-items-center ">
+        <div class="col-md-6"><span class="small text-muted"><span id="copyright"> ©
+          <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
+          </span>Odadoz - Developed by<a class="text-primary" href="https://gedexo.com/"> Gedexo </a> Technologies</span></div>
+        <div class="col-lg-6 text-end mb-2 mb-lg-0">
+          
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</footer>
+
+
+  
+</body>
+</html>
